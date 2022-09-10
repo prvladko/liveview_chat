@@ -4,6 +4,7 @@ defmodule LiveviewChat.Message do
   import Ecto.Query
   alias LiveviewChat.Repo
   alias __MODULE__
+  alias Phoenix.PubSub
 
   schema "messages" do
     field :message, :string
@@ -11,6 +12,16 @@ defmodule LiveviewChat.Message do
 
     timestamps()
   end
+
+  def subscribe() do
+    PubSub.subscribe(LiveviewChat.Pubsub, "liveview_chat")
+  end
+
+  def notify({:ok, message}, event) do
+    PubSub.broadcast(LiveviewChat.PubSub, "liveview_chat", {event, message})
+  end
+
+  def notify({:error, reason}, _event), do: {:error, reason}
 
   @doc false
   def changeset(message, attrs) do

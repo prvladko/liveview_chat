@@ -25,4 +25,9 @@ defmodule LiveviewChatWeb.MessageLive do
         {:noreply, assign(socket, changeset: changeset)}
       end
   end
+
+  def handle_info({:message_created, message}, socket) do
+    messages = socket.assign.messages ++ [message]
+    {:noreply, assign(socket, messages: messages)}
+  end
 end

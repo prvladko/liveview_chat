@@ -3,12 +3,13 @@ defmodule LiveviewChatWeb.MessageLive do
   alias LiveviewChat.Message
   alias LiveviewChat.PubSub
 
+#  @spec mount(any, any, Phoenix.LiveView.Socket.t()) :: {:ok, any}
   def mount(_params, _session, socket) do
     if connected?(socket), do: Message.subscribe()
 
     messages = Message.list_messages() |> Enum.reverse()
     changeset = Message.changeset(%Message{}, %{})
-    {:ok, assign(socket, changeset: changeset, messages: messages)}
+    {:ok, assign(socket, messages: messages, changeset: changeset)}
   end
 
   def render(assigns) do
@@ -27,7 +28,7 @@ defmodule LiveviewChatWeb.MessageLive do
   end
 
   def handle_info({:message_created, message}, socket) do
-    messages = socket.assign.messages ++ [message]
+    messages = socket.assigns.messages ++ [message]
     {:noreply, assign(socket, messages: messages)}
   end
 end

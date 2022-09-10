@@ -20,7 +20,7 @@ defmodule LiveviewChatWeb.MessageLive do
       {:error, changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
 
-      {:ok, _message} ->
+      :ok -> # broadcast returns :ok (just the atom!) if there are no errors
         changeset = Message.changeset(%Message{}, %{"name" => params["name"]})
         {:noreply, assign(socket, changeset: changeset)}
       end

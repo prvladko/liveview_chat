@@ -1,8 +1,11 @@
 defmodule LiveviewChatWeb.MessageLive do
   use LiveviewChatWeb, :live_view
   alias LiveviewChat.Message
+  alias LiveviewChat.PubSub
 
   def mount(_params, _session, socket) do
+    if connected?(socket), do: Message.subscribe()
+
     messages = Message.list_messages() |> Enum.reverse()
     changeset = Message.changeset(%Message{}, %{})
     {:ok, assign(socket, changeset: changeset, messages: messages)}

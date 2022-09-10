@@ -35,6 +35,7 @@ defmodule LiveviewChat.Message do
     %Message{}
     |> changeset(attrs)
     |> Repo.insert()
+    |> notify(:message_created)
   end
 
   def list_messages do

@@ -23,7 +23,7 @@ defmodule LiveviewChatWeb.MessageLiveTest do
     {:ok, view, _html} = live(conn, "/")
 
     assert view
-           |> form("#form", message: %{name: "Simon", message: ""})
+           |> form("#form", message: %{name: "Vlad", message: ""})
            |> render_submit() =~ html_escape("can't be blank")
   end
 
@@ -31,7 +31,7 @@ defmodule LiveviewChatWeb.MessageLiveTest do
     {:ok, view, _html} = live(conn, "/")
 
     assert view
-           |> form("#form", message: %{name: "Simon", message: "h"})
+           |> form("#form", message: %{name: "Vlad", message: "h"})
            |> render_submit() =~ "should be at least 2 character(s)"
   end
 
@@ -39,10 +39,10 @@ defmodule LiveviewChatWeb.MessageLiveTest do
     {:ok, view, _html} = live(conn, "/")
 
     assert view
-           |> form("#form", message: %{name: "Simon", message: "hi"})
+           |> form("#form", message: %{name: "Vlad", message: "hi"})
            |> render_submit()
 
-    assert render(view) =~ "<b>Simon:</b>"
+    assert render(view) =~ "<b>Vlad:</b>"
     assert render(view) =~ "hi"
   end
 
@@ -50,9 +50,9 @@ defmodule LiveviewChatWeb.MessageLiveTest do
     {:ok, view, _html} = live(conn, "/")
     assert render(view)
     # send :created_message event when the message is created
-    Message.create_message(%{"name" => "Simon", "message" => "hello"})
+    Message.create_message(%{"name" => "Vlad", "message" => "hello"})
     # test that the name and the message is displayed
-    assert render(view) =~ "<b>Simon:</b>"
+    assert render(view) =~ "<b>Vlad:</b>"
     assert render(view) =~ "hello"
   end
 end

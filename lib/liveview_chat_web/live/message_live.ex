@@ -5,9 +5,11 @@ defmodule LiveviewChatWeb.MessageLive do
   def mount(_params, _session, socket) do
     if connected?(socket), do: Message.subscribe()
 
-    messages = Message.list_messages() |> Enum.reverse()
+    messages = Message.list_messages() |> Enum.reverse() # get the list of messages
     changeset = Message.changeset(%Message{}, %{})
-    {:ok, assign(socket, messages: messages, changeset: changeset)}
+
+    {:ok, assign(socket, messages: messages, changeset: changeset),
+    temporary_assigns: [messages: []]} ## assigns messages to socket
   end
 
   def render(assigns) do
@@ -26,7 +28,7 @@ defmodule LiveviewChatWeb.MessageLive do
   end
 
   def handle_info({:message_created, message}, socket) do
-    messages = socket.assigns.messages ++ [message]
-    {:noreply, assign(socket, messages: messages)}
+#    messages = socket.assigns.messages ++ [message] # append new message to the existing list
+    {:noreply, assign(socket, messages: [message])}
   end
 end

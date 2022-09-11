@@ -46,7 +46,8 @@ defmodule LiveviewChat.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:auth_plug, "~> 1.4.10"}
     ]
   end
 

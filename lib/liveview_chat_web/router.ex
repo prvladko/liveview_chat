@@ -18,6 +18,6 @@ defmodule LiveviewChatWeb.Router do
     live "/", MessageLive
     get "/login", AuthController, :login
     get "/logout", AuthController, :logout
-    get "/ping", PingController, :ping
+    # get "/ping", PingController, :ping
   end
 end

@@ -1,9 +1,7 @@
 defmodule LiveviewChatWeb.MessageLive do
   use LiveviewChatWeb, :live_view
   alias LiveviewChat.Message
-  alias LiveviewChat.PubSub
 
-#  @spec mount(any, any, Phoenix.LiveView.Socket.t()) :: {:ok, any}
   def mount(_params, _session, socket) do
     if connected?(socket), do: Message.subscribe()
 
